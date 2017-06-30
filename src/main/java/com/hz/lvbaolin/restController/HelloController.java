@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -52,7 +54,10 @@ public class HelloController {
 
     @RequestMapping("/user/list")
     public List<User> list(){
-        userService.getAll();
+        List<User> list = new ArrayList<>();
+        Iterable<User> iter = userService.getAll();
+        iter.forEach(u -> { list.add(u); } );
+        return list;
     }
 
 }
