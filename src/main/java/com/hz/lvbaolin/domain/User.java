@@ -18,6 +18,9 @@ import javax.persistence.Table;
 public class User {
     private Long id;
     private String username;
+    private String phone;
+    private String password;
+    private String token;
     private Date birthday;
     private String sex;
     private String address;
@@ -33,6 +36,15 @@ public class User {
         this.id = id;
     }
 
+    @Column(name = "phone")
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Column(name = "username")
     public String getUsername() {
         return username;
@@ -40,6 +52,24 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Column(name = "password")
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Column(name = "token")
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Column(name = "birthday")

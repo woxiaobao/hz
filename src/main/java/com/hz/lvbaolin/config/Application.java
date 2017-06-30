@@ -33,11 +33,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EntityScan(basePackages="com.hz.lvbaolin.domain")
 @EnableJpaRepositories(basePackages="com.hz.lvbaolin")
 public class Application {
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-
-
 }
 
