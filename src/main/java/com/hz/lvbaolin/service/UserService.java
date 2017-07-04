@@ -2,6 +2,7 @@ package com.hz.lvbaolin.service;
 
 import com.hz.lvbaolin.Dao.UserDao;
 import com.hz.lvbaolin.domain.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,4 +38,11 @@ public class UserService {
 
     }
 
+    //查询数据
+    @Transactional
+    public Iterable<User> getPageAll(Pageable pageable) {
+
+        return userDao.findAll(pageable);
+
+    }
 }

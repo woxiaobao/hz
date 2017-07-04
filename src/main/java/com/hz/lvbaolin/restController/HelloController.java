@@ -6,6 +6,7 @@ import com.hz.lvbaolin.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,12 +53,23 @@ public class HelloController {
         return user;
     }
 
+    /**
+     *分页查询
+     * @param pageNo 页码
+     * @param pageSize 页码数量
+     * @return
+     */
     @RequestMapping("/user/list")
-    public List<User> list(){
+    public List<User> list(int pageNo, int pageSize){
         List<User> list = new ArrayList<>();
-        Iterable<User> iter = userService.getAll();
+//        int pageNo = offset;
+//        int pageSize = max;
+        PageRequest pageRequest = new PageRequest(pageNo, pageSize);
+        Iterable<User> iter = userService.getPageAll(pageRequest);
         iter.forEach(u -> { list.add(u); } );
         return list;
     }
+
+
 
 }
