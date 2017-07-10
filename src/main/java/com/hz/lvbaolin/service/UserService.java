@@ -19,10 +19,11 @@ public class UserService {
 
     /**
      * 保存
+     *
      * @param user
      */
     @Transactional
-    public void save(User user){
+    public void save(User user) {
         userDao.save(user);
     }
 
@@ -31,18 +32,22 @@ public class UserService {
     public void delete(long id) {
         userDao.delete(id);
     }
+
     //查询数据
     @Transactional
     public Iterable<User> getAll() {
         return userDao.findAll();
+    }
 
+    //查询数据
+    @Transactional
+    public long getCount() {
+        return userDao.count();
     }
 
     //查询数据
     @Transactional
     public Iterable<User> getPageAll(Pageable pageable) {
-
         return userDao.findAll(pageable);
-
     }
 }

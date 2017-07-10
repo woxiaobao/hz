@@ -67,7 +67,14 @@ public class HelloController {
         PageRequest pageRequest = new PageRequest(pageNo, pageSize);
         Iterable<User> iter = userService.getPageAll(pageRequest);
         iter.forEach(u -> { list.add(u); } );
+
+        logger.info("user -== data count " + userService.getCount());
         return list;
+    }
+
+    @RequestMapping("/happy")
+    public String happy(){
+        return "happy";
     }
 
 
