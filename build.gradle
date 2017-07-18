@@ -33,18 +33,27 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'watch'
+apply plugin: 'war'
 
 
 
 jar {
     baseName = 'hz'
-    version =  '0.1.0'
+//    version =  '0.1.0'
 }
 
+//jar.into('META-INF/resources') {
+//    from('src/main/webapp')
+//}
+
 repositories {
+    maven { url "https://repo.spring.io/libs-release" }
     mavenCentral() //使用maven仓库，也支持URL方式
     jcenter()
 }
+
+
+
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -52,30 +61,37 @@ targetCompatibility = 1.8
 dependencies {
 
 
-    compile("org.springframework.boot:spring-boot-starter-web") {
-        exclude module: "spring-boot-starter-tomcat"
-    }
+//    compile("org.springframework.boot:spring-boot-starter-web") {
+//        exclude module: "spring-boot-starter-tomcat"
+//    }
+    compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-jetty")
     compile("org.springframework.boot:spring-boot-starter-actuator")
-    // end::actuator[]
-    compile("org.springframework.boot:spring-boot-starter")
 
-    compile("org.springframework.boot:spring-boot-starter-aop")
+//    compile("org.springframework.boot:spring-boot-starter")
+//    compile("org.springframework.boot:spring-boot-starter-aop")
 
     compile('org.springframework.boot:spring-boot-devtools:1.4.3.RELEASE')
 
+    //data-jpa hibernate
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.hibernate:hibernate-core:5.0.4.Final')
 
-    compile 'org.apache.tomcat.embed:tomcat-embed-jasper'
-    compile 'javax.servlet:jstl:1.2'
-    //compile("org.springframework.boot:spring-boot-starter-jdbc")
+    //webservice
+    compile("org.apache.cxf:cxf-spring-boot-starter-jaxws:3.1.7")
+//    compile("org.apache.cxf:cxf-spring-boot-starter-jaxrs:3.1.7")
+//    compile("org.apache.cxf:cxf-rt-rs-extension-providers:3.1.7")
+//    compile("com.sun.xml.bind:jaxb-xjc:2.1.12")
+
+
+    compile("org.apache.tomcat.embed:tomcat-embed-jasper")
+    compile("javax.servlet:javax.servlet-api")
+    compile("javax.servlet:jstl")
 
     compile("mysql:mysql-connector-java:5.1.21")
 
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-
-    testCompile("junit:junit")
+//    testCompile("org.springframework.boot:spring-boot-starter-test")
+//    testCompile("junit:junit")
 
 }
 
