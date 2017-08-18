@@ -50,22 +50,14 @@ public class RedisController {
     @Resource(name="stringRedisTemplate")
     ValueOperations<String,String> valOpsStr;
 
+    @Resource(name = "redisTemplate")
+    ValueOperations<Object,Object> valueOperations;
+
 
     @RequestMapping("set")
     public String setKeyAndValue(){
-//        logger.debug("访问set:key={},value={}",key,value);
-        //stringRedisTemplate.opsForValue().set(key, value);
-
-//        if(key==null){
-//            key = "lv";
-//        }
-//        if(value==null){
-//            value = "baolin";
-//        }
-//        valOpsStr.set(key, value);
-
         long start = System.currentTimeMillis();
-        for (long i=0;i<10;i++){
+        for (long i=0;i<100;i++){
             User user = new User();
             user.setId(i);
             user.setUsername("宝林");
@@ -91,11 +83,52 @@ public class RedisController {
     public List<User> getKey(){
         long start = System.currentTimeMillis();
         List<User> userList = new ArrayList<>();
-        for (int i=0;i<10;i++){
+        for (int i=0;i<100;i++){
             String key = "user:"+i;
             String value = valOpsStr.get(key);
             logger.info(key + "------" + value);
             User user = (User) SerializeUtil.objectDeserialization(value);
+            userList.add(user);
+        }
+        logger.info((System.currentTimeMillis()-start )+ "");
+        return userList;
+    }
+
+
+    @RequestMapping("set1")
+    public String setKeyAndValue1(){
+        long start = System.currentTimeMillis();
+        for (long i=0;i<100;i++){
+            User user = new User();
+            user.setId(i);
+            user.setUsername("宝林");
+            user.setBirthday(new Date());
+            user.setPassword("111111");
+            user.setPhone("18801424045");
+            user.setAddress("北京朝阳");
+            user.setSex("1");
+            user.setToken("1234567890");
+
+            String key = "user:"+user.getId();
+            byte[] value = SerializeUtil.serialize(user);
+            logger.info(key + "------" + value);
+            valueOperations.set(key, value);
+        }
+        logger.info((System.currentTimeMillis()-start )+ "");
+
+
+        return "Set Ok";
+    }
+
+    @RequestMapping("get1")
+    public List<User> getKey1(){
+        long start = System.currentTimeMillis();
+        List<User> userList = new ArrayList<>();
+        for (int i=0;i<100;i++){
+            String key = "user:"+i;
+            byte[] value = (byte[])valueOperations.get(key);
+            logger.info(key + "------" + value);
+            User user = (User) SerializeUtil.unserialize(value);
             userList.add(user);
         }
         logger.info((System.currentTimeMillis()-start )+ "");

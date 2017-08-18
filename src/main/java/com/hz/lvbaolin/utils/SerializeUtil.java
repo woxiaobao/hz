@@ -20,9 +20,9 @@ public class SerializeUtil {
             byte[] bytes = baos.toByteArray();
             return bytes;
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
         }
-
+        return null;
     }
 
     public static Object unserialize(byte[] bytes) {
@@ -33,9 +33,9 @@ public class SerializeUtil {
             ObjectInputStream ois = new ObjectInputStream(bais);
             return ois.readObject();
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
         }
-
+        return null;
     }
 
 
