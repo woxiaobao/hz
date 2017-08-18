@@ -3,6 +3,7 @@ package com.hz.lvbaolin.restController;
 
 import com.hz.lvbaolin.domain.User;
 import com.hz.lvbaolin.service.UserService;
+import com.hz.lvbaolin.utils.HttpClientUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +24,28 @@ import java.util.List;
 
 @RestController
 public class HelloController {
+
+
+    protected static Logger logger = LoggerFactory.getLogger(HelloController.class);
+
+
     // 从 application.properties 中读取配置，如取不到默认值为Hello
     @Value("${application.hello:Hello}")
     private String hello;
 
 
-    protected static Logger logger = LoggerFactory.getLogger(HelloController.class);
+
 
     @Resource
     private UserService userService;
 
     @RequestMapping("/hello")
     public String index() {
-        logger.info("baolin hello everyone!!!---");
-        return "Greetings from Spring Boot!" + hello;
+
+        String url = "http://localhost:8083/login/add";
+        String content = HttpClientUtil.get(url);
+        logger.info(content);
+        return "success";
     }
 
     @RequestMapping("/user")
