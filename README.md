@@ -1,6 +1,6 @@
 ### springboot学习
 
-#### 说明 mysql和 NOSQL数据库进行一个性能的比较，同时对一百条数据进行持久化
+#### 说明 mysql和 NOSQL(redis/mongodb)数据库进行一个数据持久化性能的比较
 
 - springboot hibernate mysql
 
