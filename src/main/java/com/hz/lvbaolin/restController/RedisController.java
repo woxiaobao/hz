@@ -26,20 +26,7 @@ public class RedisController {
 
     protected static Logger logger = LoggerFactory.getLogger(RedisController.class);
 
-    @RequestMapping("/user")
-    public User add() {
-        logger.info("add to user");
-        User user = new User();
-        user.setUsername("宝林");
-        user.setBirthday(new Date());
-        user.setPassword("111111");
-        user.setPhone("18801424045");
-        user.setAddress("北京朝阳");
-        user.setSex("1");
-        user.setToken("1234567890");
 
-        return user;
-    }
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
@@ -99,6 +86,7 @@ public class RedisController {
     public String setKeyAndValue1(){
         long start = System.currentTimeMillis();
         for (long i=0;i<100;i++){
+
             User user = new User();
             user.setId(i);
             user.setUsername("宝林");
@@ -112,10 +100,10 @@ public class RedisController {
             String key = "user:"+user.getId();
             byte[] value = SerializeUtil.serialize(user);
             logger.info(key + "------" + value);
+
             valueOperations.set(key, value);
         }
-        logger.info((System.currentTimeMillis()-start )+ "");
-
+        logger.info("set 100 data time :" + (System.currentTimeMillis()-start));
 
         return "Set Ok";
     }

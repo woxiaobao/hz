@@ -79,6 +79,11 @@ dependencies {
 
     compile("org.springframework.boot:spring-boot-starter-redis")
 
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+
+    compile("org.projectlombok:lombok:1.16.10")
+
+
     //webservice
 //    compile("org.apache.cxf:cxf-spring-boot-starter-jaxws:3.1.7")
 //    compile("org.apache.cxf:cxf-spring-boot-starter-jaxrs:3.1.7")

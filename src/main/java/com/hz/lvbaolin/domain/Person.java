@@ -1,27 +1,24 @@
 package com.hz.lvbaolin.domain;
 
-
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 /**
- * Created by master-lv on 2017/6/29.
+ * Created by master-lv on 2017/8/21.
  */
-@Entity
-@Table(name = "t_user")
-public class User implements Serializable {
+
+@Document(collection = "persons")
+@Data
+public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    @Id
+    private long id;
     private String username;
     private String phone;
     private String password;
@@ -30,27 +27,14 @@ public class User implements Serializable {
     private String sex;
     private String address;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    @Column(name = "phone")
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    @Column(name = "username")
     public String getUsername() {
         return username;
     }
@@ -59,7 +43,14 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    @Column(name = "password")
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -68,7 +59,6 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    @Column(name = "token")
     public String getToken() {
         return token;
     }
@@ -77,7 +67,6 @@ public class User implements Serializable {
         this.token = token;
     }
 
-    @Column(name = "birthday")
     public Date getBirthday() {
         return birthday;
     }
@@ -86,7 +75,6 @@ public class User implements Serializable {
         this.birthday = birthday;
     }
 
-    @Column(name = "sex")
     public String getSex() {
         return sex;
     }
@@ -95,7 +83,6 @@ public class User implements Serializable {
         this.sex = sex;
     }
 
-    @Column(name = "adress")
     public String getAddress() {
         return address;
     }
@@ -103,11 +90,4 @@ public class User implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
-
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", username=" + username + ", birthday="
-                + birthday + ", sex=" + sex + ", address=" + address + "]";
-    }
-
 }

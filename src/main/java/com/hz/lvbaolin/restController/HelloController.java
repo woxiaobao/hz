@@ -23,6 +23,7 @@ import java.util.List;
  */
 
 @RestController
+@RequestMapping("/hello")
 public class HelloController {
 
 
@@ -48,23 +49,27 @@ public class HelloController {
         return "success";
     }
 
-    @RequestMapping("/user")
-    public User add() {
+    @RequestMapping("/add")
+    public String add() {
         logger.info("add to user");
-        User user = new User();
-        user.setUsername("宝林");
-        user.setBirthday(new Date());
-        user.setPassword("111111");
-        user.setPhone("18801424045");
-        user.setAddress("北京朝阳");
-        user.setSex("1");
-        user.setToken("1234567890");
-        try {
-            userService.save(user);
-        }catch (Exception e){
-            logger.error("发生异常，保存失败");
+        long start = System.currentTimeMillis();
+        for (int i= 0;i<100;i++) {
+            User user = new User();
+            user.setUsername("宝林");
+            user.setBirthday(new Date());
+            user.setPassword("111111");
+            user.setPhone("18801424045");
+            user.setAddress("北京朝阳");
+            user.setSex("1");
+            user.setToken("1234567890");
+            try {
+                userService.save(user);
+            } catch (Exception e) {
+                logger.error("发生异常，保存失败");
+            }
         }
-        return user;
+        logger.info("set 100 data time :" + (System.currentTimeMillis()-start));
+        return "user add success!";
     }
 
     /**
@@ -73,7 +78,7 @@ public class HelloController {
      * @param pageSize 页码数量
      * @return
      */
-    @RequestMapping("/user/list")
+    @RequestMapping("/list")
     public List<User> list(int pageNo, int pageSize){
         List<User> list = new ArrayList<>();
 //        int pageNo = offset;
