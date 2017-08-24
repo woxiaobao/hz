@@ -29,9 +29,22 @@ public class User implements Serializable {
     private Date birthday;
     private String sex;
     private String address;
+    private Long number;
+
+
+
+    @Column(name = "number")
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
     @Column(name = "id")
     public Long getId() {
         return id;

@@ -27,6 +27,7 @@ public class RedisController {
     protected static Logger logger = LoggerFactory.getLogger(RedisController.class);
 
 
+    //RedisTemplate是线程安全的，能够用于多个实例中
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
@@ -37,9 +38,34 @@ public class RedisController {
     @Resource(name="stringRedisTemplate")
     ValueOperations<String,String> valOpsStr;
 
-    @Resource(name = "redisTemplate")
-    ValueOperations<Object,Object> valueOperations;
+    @Resource(name="redisTemplate")
+    ValueOperations<String,Long> valOpsLong;
 
+    @Resource(name = "redisTemplate")
+    ValueOperations<String,Object> valueOperations;
+
+
+    /**
+     * 用于测试高并发的情况下，redis数据安全性的问题
+     * @return
+     */
+    @RequestMapping("concurrent")
+    public String concurrent() throws InterruptedException {
+        String value = valOpsStr.get("concurrent:data");
+        if(value.equals(null)){
+            valOpsStr.set("concurrent:data", "0");
+        }
+
+        for (int i=0;i<100;i++){
+            String dataValue = valOpsStr.get("concurrent:data");
+            int vals = Integer.parseInt(dataValue);
+            vals++;
+            valOpsStr.set("concurrent:data", vals + "");
+            Thread.sleep(20);
+        }
+        logger.info("concurrent:data = " + valOpsStr.get("concurrent:data"));
+        return "ok";
+    }
 
     @RequestMapping("set")
     public String setKeyAndValue(){
@@ -122,4 +148,8 @@ public class RedisController {
         logger.info((System.currentTimeMillis()-start )+ "");
         return userList;
     }
+
+
+
+
 }
