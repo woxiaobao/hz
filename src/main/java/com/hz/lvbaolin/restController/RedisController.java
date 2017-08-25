@@ -15,6 +15,8 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by master-lv on 2017/8/18.
@@ -26,6 +28,7 @@ public class RedisController {
 
     protected static Logger logger = LoggerFactory.getLogger(RedisController.class);
 
+    private final Lock queueLock = new ReentrantLock();
 
     //RedisTemplate是线程安全的，能够用于多个实例中
 
@@ -47,6 +50,9 @@ public class RedisController {
 
     /**
      * 用于测试高并发的情况下，redis数据安全性的问题
+     *
+     * 使用synchronized(this){} 多线程锁
+     *
      * @return
      */
     @RequestMapping("concurrent")
@@ -56,13 +62,39 @@ public class RedisController {
             valOpsStr.set("concurrent:data", "0");
         }
 
+        synchronized(this){
+            for (int i=0;i<100;i++){
+                String dataValue = valOpsStr.get("concurrent:data");
+                int vals = Integer.parseInt(dataValue);
+                vals++;
+                valOpsStr.set("concurrent:data", vals + "");
+            }
+        }
+
+        logger.info("concurrent:data = " + valOpsStr.get("concurrent:data"));
+        return "ok";
+    }
+
+
+
+    /**
+     * 用于测试高并发的情况下，redis数据安全性的问题
+     *
+     * 使用ReentrantLock 多线程锁
+     *
+     * @return
+     */
+    @RequestMapping("lock")
+    public String lock() throws InterruptedException {
+
+        queueLock.lock();
         for (int i=0;i<100;i++){
             String dataValue = valOpsStr.get("concurrent:data");
             int vals = Integer.parseInt(dataValue);
             vals++;
             valOpsStr.set("concurrent:data", vals + "");
-            Thread.sleep(20);
         }
+        queueLock.unlock();
         logger.info("concurrent:data = " + valOpsStr.get("concurrent:data"));
         return "ok";
     }

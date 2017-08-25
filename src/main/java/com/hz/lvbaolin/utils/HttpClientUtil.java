@@ -89,11 +89,33 @@ public class HttpClientUtil {
 
 
 //    public static void main(String[] args) {
-//        HttpClientUtil hd = new HttpClientUtil();
-//        hd.get("http://www.baidu.com");
-//        Map<String,String> map = new HashMap();
-//        map.put("id","1");
-//        hd.post("http://localhost:8080/springMVC/menu/getChildren.do",map);
+////        HttpClientUtil hd = new HttpClientUtil();
+////        for(int i=0;i<10;i++){
+////            hd.get("http://localhost:8081/redis/concurrent");
+////        }
+//
+////        Map<String,String> map = new HashMap();
+////        map.put("id","1");
+////        hd.post("http://localhost:8080/springMVC/menu/getChildren.do",map);
+//
+//
+//
+//        Runnable customer = new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    HttpClientUtil.get("http://localhost:8081/redis/lock");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//
+//        for (int i = 1; i < 10; i++) {
+//            new Thread(customer).start();
+//        }
+//
+//
 //    }
 
 }
