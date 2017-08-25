@@ -42,14 +42,16 @@
   ```
   
  ReentrantLock实现线程锁 
- [http://localhost:8081/redis/lock](http://localhost:8081/redis/lock)
-    
-    ```java
-    private final Lock queueLock = new ReentrantLock();//定义线程锁
-    queueLock.lock();//加锁
-    
-    queueLock.unlock();//解锁
-    ```
+ [http://localhost:8081/redis/lock](http://localhost:8081/redis/lock) 
+
+```java
+private final Lock queueLock = new ReentrantLock();//定义线程锁
+queueLock.lock();//加锁
+queueLock.unlock();//解锁
+
+```
+
+#### 其他数据库在单机的情况下控制高并发同上
     
     
     
